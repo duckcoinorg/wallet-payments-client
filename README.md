@@ -5,18 +5,18 @@ A minimalistic TypeScript client library for integrating Duck Wallet payment pro
 ## Installation
 
 ```bash
-yarn add @duckcoin/duck-wallet-payments
+yarn add @duckcoin/payments
 ```
 
 ## Usage
 
 ```typescript
-import { DuckWalletClient } from "@duckcoin/duck-wallet-payments";
+import { DuckWalletClient } from "@duckcoin/payments";
 
 // Initialize the client
 const client = new DuckWalletClient({
   apiKey: "your-api-key",
-  baseUrl: "https://api.duckwallet.com", // Optional, defaults to production URL
+  baseUrl: "https://wallet.duckcoin.org/api", // Optional, defaults to production URL
 });
 
 // Create an invoice

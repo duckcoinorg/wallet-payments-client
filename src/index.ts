@@ -89,7 +89,7 @@ export class DuckWalletClient {
 
   constructor(config: DuckWalletClientConfig) {
     this.apiKey = config.apiKey;
-    this.baseUrl = config.baseUrl || "https://api.duckwallet.com";
+    this.baseUrl = config.baseUrl || "https://wallet.duckcoin.org/api";
   }
 
   private async request<T>(
