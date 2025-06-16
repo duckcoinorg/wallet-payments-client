@@ -35,8 +35,8 @@ const invoice = await client.createInvoice({
 // Get invoice status
 const status = await client.getInvoiceStatus("invoice-id");
 
-// Pay invoice
-const payment = await client.payInvoice({
+// Complete invoice payment
+const payment = await client.completeInvoicePayment({
   id: "invoice-id",
   code: "payment-code",
   userTelegramId: 123456789,
@@ -44,6 +44,9 @@ const payment = await client.payInvoice({
 
 // Get available currencies
 const currencies = await client.getCurrencies(1, 10); // page 1, limit 10
+
+// Request payout
+await client.requestPayout(); // creates a payout request which should be processed within 1h
 ```
 
 ## API Reference
@@ -89,7 +92,7 @@ Parameters:
 
 - `invoiceId`: String - The ID of the invoice to check
 
-##### payInvoice(params: PayInvoiceOptions): Promise<PaymentTransaction>
+##### completeInvoicePayment(params: CompleteInvoicePaymentOptions): Promise<PaymentTransaction>
 
 Processes a payment for an invoice.
 
@@ -107,6 +110,10 @@ Parameters:
 
 - `page`: Number - Page number for pagination
 - `limit`: Number - Number of items per page
+
+##### requestPayout(): Promise<void>
+
+Creates a payout request which will be processed within 1 hour.
 
 ### Error Handling
 
@@ -222,10 +229,10 @@ interface CreateInvoiceOptions {
 }
 ```
 
-### PayInvoiceOptions
+### CompleteInvoicePaymentOptions
 
 ```typescript
-interface PayInvoiceOptions {
+interface CompleteInvoicePaymentOptions {
   id: string;
   code: string;
   userTelegramId: number;

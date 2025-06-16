@@ -27,7 +27,7 @@ export interface InvoiceStatusWithCode extends InvoiceStatus {
   code: string;
 }
 
-export interface PayInvoiceOptions {
+export interface CompleteInvoicePaymentOptions {
   id: string;
   code: string;
   userTelegramId: number;
@@ -154,7 +154,9 @@ export class DuckWalletClient {
     );
   }
 
-  async payInvoice(params: PayInvoiceOptions): Promise<PaymentTransaction> {
+  async completeInvoicePayment(
+    params: CompleteInvoicePaymentOptions,
+  ): Promise<PaymentTransaction> {
     const { id, code, userTelegramId } = params;
     return this.request<PaymentTransaction>(
       `/custodial-wallet/customer/invoice/${id}/${code}/${userTelegramId}/payment`,
@@ -171,5 +173,11 @@ export class DuckWalletClient {
     return this.request<CurrenciesPaginated>(
       `/custodial-wallet/customer/currencies?page=${page}&limit=${limit}`,
     );
+  }
+
+  async requestPayout(): Promise<void> {
+    return this.request<void>(`/custodial-wallet/customer/payout`, {
+      method: "POST",
+    });
   }
 }
