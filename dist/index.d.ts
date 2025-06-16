@@ -23,7 +23,7 @@ export interface InvoiceStatus {
 export interface InvoiceStatusWithCode extends InvoiceStatus {
     code: string;
 }
-export interface PayInvoiceOptions {
+export interface CompleteInvoicePaymentOptions {
     id: string;
     code: string;
     userTelegramId: number;
@@ -75,6 +75,7 @@ export declare class DuckWalletClient {
     private request;
     createInvoice(options: CreateInvoiceOptions): Promise<InvoiceStatusWithCode>;
     getInvoiceStatus(invoiceId: string): Promise<InvoiceStatus>;
-    payInvoice(params: PayInvoiceOptions): Promise<PaymentTransaction>;
+    completeInvoicePayment(params: CompleteInvoicePaymentOptions): Promise<PaymentTransaction>;
     getCurrencies(): Promise<CurrenciesPaginated>;
+    requestPayout(): Promise<void>;
 }
