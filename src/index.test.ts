@@ -223,11 +223,11 @@ describe("DuckWalletClient", () => {
         json: () => Promise.resolve(mockResponse),
       });
 
-      const result = await client.getCurrencies(1, 10);
+      const result = await client.getCurrencies();
 
       expect(result).toEqual(mockResponse);
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://api.test.duckwallet.com/custodial-wallet/customer/currencies?page=1&limit=10",
+        "https://api.test.duckwallet.com/custodial-wallet/customer/currencies",
         expect.objectContaining({
           headers: expect.objectContaining({
             "x-api-key": "test-api-key",

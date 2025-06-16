@@ -166,12 +166,9 @@ export class DuckWalletClient {
     );
   }
 
-  async getCurrencies(
-    page: number,
-    limit: number,
-  ): Promise<CurrenciesPaginated> {
+  async getCurrencies(): Promise<CurrenciesPaginated> {
     return this.request<CurrenciesPaginated>(
-      `/custodial-wallet/customer/currencies?page=${page}&limit=${limit}`,
+      `/custodial-wallet/customer/currencies`,
     );
   }
 

@@ -43,7 +43,7 @@ const payment = await client.completeInvoicePayment({
 });
 
 // Get available currencies
-const currencies = await client.getCurrencies(1, 10); // page 1, limit 10
+const currencies = await client.getCurrencies();
 
 // Request payout
 await client.requestPayout(); // creates a payout request which should be processed within 1h
@@ -102,7 +102,7 @@ Parameters:
 - `code`: String - The payment code for the invoice
 - `userTelegramId`: Number - The Telegram ID of the user making the payment
 
-##### getCurrencies(page: number, limit: number): Promise<CurrenciesPaginated>
+##### getCurrencies(): Promise<CurrenciesPaginated>
 
 Gets a paginated list of available currencies.
 

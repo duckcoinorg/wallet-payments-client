@@ -76,5 +76,5 @@ export declare class DuckWalletClient {
     createInvoice(options: CreateInvoiceOptions): Promise<InvoiceStatusWithCode>;
     getInvoiceStatus(invoiceId: string): Promise<InvoiceStatus>;
     payInvoice(params: PayInvoiceOptions): Promise<PaymentTransaction>;
-    getCurrencies(page: number, limit: number): Promise<CurrenciesPaginated>;
+    getCurrencies(): Promise<CurrenciesPaginated>;
 }
