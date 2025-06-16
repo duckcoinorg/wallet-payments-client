@@ -1,0 +1,46 @@
+{
+  "name": "@duckcoin/payments",
+  "version": "0.0.1",
+  "description": "Duck Wallet Payments client library",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "prepublishOnly": "yarn build && yarn test && yarn lint",
+    "prepack": "yarn build",
+    "clean": "rm -rf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duckcoinorg/wallet-payments-client"
+  },
+  "bugs": {
+    "url": "https://github.com/duckcoinorg/wallet-payments-client/issues"
+  },
+  "homepage": "https://github.com/duckcoinorg/wallet-payments-client#readme",
+  "keywords": [
+    "duck-wallet",
+    "payments",
+    "crypto",
+    "api"
+  ],
+  "author": "DuckCoin",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^24.0.1",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "jest": "^30.0.0",
+    "prettier": "^3.0.0",
+    "ts-jest": "^29.4.0",
+    "typescript": "^5.0.0"
+  }
+}
