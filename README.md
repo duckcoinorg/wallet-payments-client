@@ -99,7 +99,7 @@ Processes a payment for an invoice.
 Parameters:
 
 - `id`: String - The ID of the invoice to pay
-- `code`: String - The payment code for the invoice
+- `code`: String - The payment code for the invoice (note: this one should come from approval callback)
 - `userTelegramId`: Number - The Telegram ID of the user making the payment
 
 ##### getCurrencies(): Promise<CurrenciesPaginated>
@@ -161,7 +161,7 @@ interface InvoiceStatus {
 
 ```typescript
 interface InvoiceStatusWithCode extends InvoiceStatus {
-  code: string;
+  code: string; // note: "code" from createInvoice can only be used to request confirmation from user
 }
 ```
 
