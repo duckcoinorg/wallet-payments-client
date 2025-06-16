@@ -112,6 +112,11 @@ export class DuckWalletClient {
       if (!response.ok) {
         const error = await response.json().catch(() => ({}) as unknown);
         const errObj = error as Record<string, unknown>;
+
+        if (Array.isArray(errObj.message)) {
+          errObj.message = errObj.message.join(", ");
+        }
+
         throw new DuckWalletError(
           typeof errObj.message === "string"
             ? errObj.message
