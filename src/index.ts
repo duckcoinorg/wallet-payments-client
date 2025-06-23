@@ -89,7 +89,7 @@ export class DuckWalletClient {
 
   constructor(config: DuckWalletClientConfig) {
     this.apiKey = config.apiKey;
-    this.baseUrl = config.baseUrl || "https://wallet.duckcoin.org/api";
+    this.baseUrl = config.baseUrl || "https://wallet.duckcoin.org/api/v1";
   }
 
   private async request<T>(
@@ -145,7 +145,7 @@ export class DuckWalletClient {
     options: CreateInvoiceOptions,
   ): Promise<InvoiceStatusWithCode> {
     return this.request<InvoiceStatusWithCode>(
-      "/custodial-wallet/customer/invoice",
+      "/invoice",
       {
         method: "POST",
         body: JSON.stringify(options),
@@ -155,7 +155,7 @@ export class DuckWalletClient {
 
   async getInvoiceStatus(invoiceId: string): Promise<InvoiceStatus> {
     return this.request<InvoiceStatus>(
-      `/custodial-wallet/customer/invoice/${invoiceId}/status`,
+      `/invoice/${invoiceId}/status`,
     );
   }
 
@@ -164,7 +164,7 @@ export class DuckWalletClient {
   ): Promise<PaymentTransaction> {
     const { id, code, userTelegramId } = params;
     return this.request<PaymentTransaction>(
-      `/custodial-wallet/customer/invoice/${id}/${code}/${userTelegramId}/payment`,
+      `/invoice/${id}/${code}/${userTelegramId}/payment`,
       {
         method: "POST",
       },
@@ -173,12 +173,12 @@ export class DuckWalletClient {
 
   async getCurrencies(): Promise<CurrenciesPaginated> {
     return this.request<CurrenciesPaginated>(
-      `/custodial-wallet/customer/currencies`,
+      `/currencies`,
     );
   }
 
   async requestPayout(): Promise<void> {
-    return this.request<void>(`/custodial-wallet/customer/payout`, {
+    return this.request<void>(`/payout`, {
       method: "POST",
     });
   }

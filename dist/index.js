@@ -13,7 +13,7 @@ exports.DuckWalletError = DuckWalletError;
 class DuckWalletClient {
     constructor(config) {
         this.apiKey = config.apiKey;
-        this.baseUrl = config.baseUrl || "https://wallet.duckcoin.org/api";
+        this.baseUrl = config.baseUrl || "https://wallet.duckcoin.org/api/v1";
     }
     async request(endpoint, options = {}) {
         const url = `${this.baseUrl}${endpoint}`;
@@ -51,25 +51,25 @@ class DuckWalletClient {
         }
     }
     async createInvoice(options) {
-        return this.request("/custodial-wallet/customer/invoice", {
+        return this.request("/invoice", {
             method: "POST",
             body: JSON.stringify(options),
         });
     }
     async getInvoiceStatus(invoiceId) {
-        return this.request(`/custodial-wallet/customer/invoice/${invoiceId}/status`);
+        return this.request(`/invoice/${invoiceId}/status`);
     }
     async completeInvoicePayment(params) {
         const { id, code, userTelegramId } = params;
-        return this.request(`/custodial-wallet/customer/invoice/${id}/${code}/${userTelegramId}/payment`, {
+        return this.request(`/invoice/${id}/${code}/${userTelegramId}/payment`, {
             method: "POST",
         });
     }
     async getCurrencies() {
-        return this.request(`/custodial-wallet/customer/currencies`);
+        return this.request(`/currencies`);
     }
     async requestPayout() {
-        return this.request(`/custodial-wallet/customer/payout`, {
+        return this.request(`/payout`, {
             method: "POST",
         });
     }

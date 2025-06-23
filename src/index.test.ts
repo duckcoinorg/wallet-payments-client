@@ -45,7 +45,7 @@ describe("DuckWalletClient", () => {
 
       expect(result).toEqual(mockResponse);
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://api.test.duckwallet.com/custodial-wallet/customer/invoice",
+        "https://api.test.duckwallet.com/invoice",
         expect.objectContaining({
           method: "POST",
           headers: expect.objectContaining({
@@ -125,7 +125,7 @@ describe("DuckWalletClient", () => {
 
       expect(result).toEqual(mockResponse);
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://api.test.duckwallet.com/custodial-wallet/customer/invoice/test-invoice-id/status",
+        "https://api.test.duckwallet.com/invoice/test-invoice-id/status",
         expect.objectContaining({
           headers: expect.objectContaining({
             "x-api-key": "test-api-key",
@@ -167,7 +167,7 @@ describe("DuckWalletClient", () => {
 
       expect(result).toEqual(mockResponse);
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://api.test.duckwallet.com/custodial-wallet/customer/invoice/test-invoice-id/invoice-code-123/123456789/payment",
+        "https://api.test.duckwallet.com/invoice/test-invoice-id/invoice-code-123/123456789/payment",
         expect.objectContaining({
           method: "POST",
           headers: expect.objectContaining({
@@ -227,7 +227,7 @@ describe("DuckWalletClient", () => {
 
       expect(result).toEqual(mockResponse);
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://api.test.duckwallet.com/custodial-wallet/customer/currencies",
+        "https://api.test.duckwallet.com/currencies",
         expect.objectContaining({
           headers: expect.objectContaining({
             "x-api-key": "test-api-key",
@@ -247,7 +247,7 @@ describe("DuckWalletClient", () => {
       await client.requestPayout();
 
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://api.test.duckwallet.com/custodial-wallet/customer/payout",
+        "https://api.test.duckwallet.com/payout",
         expect.objectContaining({
           method: "POST",
           headers: expect.objectContaining({
