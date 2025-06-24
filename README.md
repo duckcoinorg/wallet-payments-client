@@ -50,6 +50,89 @@ const currencies = await client.getCurrencies();
 await client.requestPayout(); // creates a payout request which should be processed within 1h
 ```
 
+## Webhooks and Redirects
+
+### Webhooks
+
+Duck Wallet sends webhook notifications when invoice status changes. The webhook body contains the invoice status:
+
+```json
+{
+  "id": "796acd3c-9878-43cd-a7e7-f1d753b01e08",
+  "code": "d383e722-2069-4ff3-8cc4-afdc769c1800",
+  "status": "cancelled",
+  "expiresAt": "2025-06-22T11:34:54.844Z"
+}
+```
+
+#### Setting up webhook endpoint
+
+Include your secret key in the webhook URL path for authorization:
+
+```typescript
+// app/api/duck-webhook/[secret]/route.ts
+export async function POST(
+  request: Request,
+  { params }: { params: { secret: string } }
+) {
+  // Verify secret key
+  if (params.secret !== process.env.DUCK_WEBHOOK_SECRET) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
+  const webhookData = await request.json();
+  
+  // For additional security, confirm status via API
+  const client = new DuckWalletClient({ apiKey: process.env.DUCK_API_KEY! });
+  const confirmedStatus = await client.getInvoiceStatus(webhookData.id);
+  
+  // Handle the invoice status change
+  console.log("Invoice status:", confirmedStatus.status);
+  
+  return new Response("OK");
+}
+```
+
+Configure webhook URL: `https://yourapp.com/api/duck-webhook/your-secret-key`
+
+### Redirects
+
+Payment redirects contain `id` and `code` parameters for payment completion:
+
+```typescript
+// Handle redirect from Duck Wallet
+// URL: https://yourapp.com/payment/return?id=invoice-id&code=payment-code
+
+export default function PaymentReturn() {
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
+  const code = searchParams.get('code');
+
+  useEffect(() => {
+    if (id && code) {
+      // Complete the payment
+      completePayment(id, code);
+    }
+  }, [id, code]);
+
+  const completePayment = async (invoiceId: string, paymentCode: string) => {
+    try {
+      const client = new DuckWalletClient({ apiKey: process.env.DUCK_API_KEY! });
+      const payment = await client.completeInvoicePayment({
+        id: invoiceId,
+        code: paymentCode,
+        userTelegramId: 123456789, // Get from your auth system
+      });
+      console.log("Payment completed:", payment);
+    } catch (error) {
+      console.error("Payment completion failed:", error);
+    }
+  };
+
+  return <div>Processing payment...</div>;
+}
+```
+
 ## API Reference
 
 ### DuckWalletClient
